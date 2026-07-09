@@ -1,71 +1,139 @@
 # 📄 AI Document Intelligence Assistant
 
-[![Python Version](https://img.shields.io/badge/python-3.11-blue.svg)](https://python.org)
-[![Streamlit](https://img.shields.io/badge/streamlit-1.28.0-red.svg)](https://streamlit.io)
-[![Docker](https://img.shields.io/badge/docker-ready-blue.svg)](https://docker.com)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+![Python](https://img.shields.io/badge/Python-3.11-blue.svg)
+![Streamlit](https://img.shields.io/badge/Streamlit-1.28.0-red.svg)
+![Docker](https://img.shields.io/badge/Docker-Ready-blue.svg)
+![License](https://img.shields.io/badge/License-MIT-green.svg)
 
-A powerful AI-powered document intelligence assistant that extracts, analyzes, and answers questions about your documents using state-of-the-art NLP and OCR technologies.
+A powerful **AI-powered Document Intelligence Assistant** that extracts, analyzes, summarizes, and answers questions from documents using advanced **OCR, NLP, and Transformer-based AI models**.
+
+---
 
 ## ✨ Features
 
-- 📄 **Document Processing**: Supports PDF, PNG, JPG, JPEG files
-- 🔍 **OCR Extraction**: Extracts text from scanned documents and images
-- 🤖 **AI Summarization**: Generates concise summaries using transformer models
-- 🎯 **Smart Information Extraction**: Extracts entities, dates, names, locations, and keywords
-- 💬 **Interactive Q&A**: Ask questions about your document and get intelligent answers
-- 📊 **Document Analytics**: Get statistics and insights about your documents
-- 🐳 **Docker Ready**: Easy deployment with Docker
-- 🚀 **Production Ready**: Scalable and containerized architecture
+- 📄 **Document Processing**
+  - Supports PDF, PNG, JPG, and JPEG files.
 
-## 🏗️ Architecture
-┌─────────────────────────────────────────────────────────────┐
-│ Streamlit UI Layer │
-├─────────────┬───────────────────────┬─────────────────────┤
-│ Document │ Information │ Q&A System │
-│ Upload │ Extraction │ (Semantic Search │
-│ │ (spaCy NER) │ + BERT QA) │
-├─────────────┴───────────────────────┴─────────────────────┤
-│ OCR Layer (Tesseract) │
-├─────────────────────────────────────────────────────────────┤
-│ NLP Layer (Transformers) │
-│ - BART Summarization │
-│ - Sentence Transformers │
-│ - DistilBERT QA │
-└─────────────────────────────────────────────────────────────┘
+- 🔍 **OCR Text Extraction**
+  - Extracts text from scanned documents and images using Tesseract OCR.
 
+- 🤖 **AI Summarization**
+  - Generates concise document summaries using Transformer models.
 
-## 🚀 Quick Start
+- 🎯 **Smart Information Extraction**
+  - Identifies entities such as names, organizations, locations, dates, and keywords.
 
-### Prerequisites
+- 💬 **Interactive Question Answering**
+  - Ask questions about uploaded documents and receive intelligent answers.
 
-- **Python 3.11+** or **Docker**
-- **4GB+ RAM** (8GB recommended)
-- **Git**
+- 📊 **Document Analytics**
+  - Provides document statistics and insights.
 
-### Option 1: Run with Docker (Recommended)
+- 🐳 **Docker Ready**
+  - Easy deployment using Docker and Docker Compose.
 
-```bash
-# Clone the repository
-git clone https://github.com/yourusername/document-intelligence.git
-cd document-intelligence
+---
 
-# Build and run with Docker Compose
-docker-compose up --build
+# 🏗️ Architecture
 
-# Access the application
-# Open http://localhost:8501
-
+```text
+Input Document
+      │
+      ▼
+┌─────────────────────────────────────────────┐
+│           PREPROCESSING                     │
+│  ┌──────────────────────────────────────┐  │
+│  │  Image/PDF → Text Extraction (OCR)   │  │
+│  └──────────────────────────────────────┘  │
+│  ┌──────────────────────────────────────┐  │
+│  │  Text Cleaning & Normalization       │  │
+│  └──────────────────────────────────────┘  │
+└─────────────────────────────────────────────┘
+      │
+      ▼
+┌─────────────────────────────────────────────┐
+│           ANALYSIS LAYER                    │
+│  ┌──────────────┐  ┌────────────────────┐  │
+│  │  NER         │  │  Keyword Extraction │  │
+│  │  (spaCy)     │  │  (TF-IDF)          │  │
+│  └──────────────┘  └────────────────────┘  │
+│  ┌──────────────┐  ┌────────────────────┐  │
+│  │  Relation    │  │  Fact Extraction   │  │
+│  │  Extraction  │  │  (Pattern-based)   │  │
+│  └──────────────┘  └────────────────────┘  │
+└─────────────────────────────────────────────┘
+      │
+      ▼
+┌─────────────────────────────────────────────┐
+│           SUMMARIZATION                      │
+│  ┌──────────────────────────────────────┐  │
+│  │  BART Model (Abstractive)            │  │
+│  └──────────────────────────────────────┘  │
+└─────────────────────────────────────────────┘
+      │
+      ▼
+┌─────────────────────────────────────────────┐
+│           INDEXING & Q&A                    │
+│  ┌──────────────────────────────────────┐  │
+│  │  Semantic Indexing (Embeddings)      │  │
+│  └──────────────────────────────────────┘  │
+│  ┌──────────────────────────────────────┐  │
+│  │  QA Model (DistilBERT)               │  │
+│  └──────────────────────────────────────┘  │
+└─────────────────────────────────────────────┘
+      │
+      ▼
+   Output Results
 ```
-### Option 2: Run locally
+
+---
+
+# 🚀 Quick Start
+
+## Prerequisites
+
+- Python 3.11+
+- Docker (Optional)
+- Git
+- 4GB RAM (8GB Recommended)
+
+---
+
+## Option 1 — Run with Docker
+
 ```bash
-# Clone the repository
-git clone https://github.com/yourusername/document-intelligence.git
-cd document-intelligence
+# Clone repository
+git clone https://github.com/YOUR_GITHUB_USERNAME/AI-Document-Intelligence-Assistant.git
+
+cd AI-Document-Intelligence-Assistant
+
+# Build and run
+docker-compose -f docker/docker-compose.yml up --build -d
+
+# Open
+http://localhost:8501
+```
+
+---
+
+## Option 2 — Run Locally
+
+```bash
+# Clone repository
+git clone https://github.com/YOUR_GITHUB_USERNAME/AI-Document-Intelligence-Assistant.git
+
+cd AI-Document-Intelligence-Assistant
 
 # Create virtual environment
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Activate environment
+
+# Windows
+venv\Scripts\activate
+
+# Linux / macOS
+source venv/bin/activate
 
 # Install dependencies
 pip install -r requirements.txt
@@ -73,10 +141,174 @@ pip install -r requirements.txt
 # Download spaCy model
 python -m spacy download en_core_web_sm
 
-# Run the application
+# Run application
 streamlit run app/main.py
 
-# Access the application
-# Open http://localhost:8501
-
+# Open browser
+http://localhost:8501
 ```
+
+---
+
+# 📁 Project Structure
+
+```text
+AI-Document-Intelligence-Assistant/
+│
+├── app/
+│   ├── main.py
+│   ├── ocr_engine.py
+│   ├── text_processor.py
+│   ├── summarizer.py
+│   ├── entity_extractor.py
+│   └── qa_system.py
+│
+├── docker/
+│   ├── Dockerfile
+│   └── docker-compose.yml
+│
+├── requirements.txt
+├── .dockerignore
+├── .gitignore
+├── README.md
+└── LICENSE
+```
+
+---
+
+# 🛠️ Technology Stack
+
+| Layer | Technology |
+|---------|------------|
+| Frontend | Streamlit |
+| OCR | Tesseract OCR |
+| Image Processing | OpenCV, Pillow |
+| NLP | spaCy |
+| Summarization | BART (Transformers) |
+| Question Answering | DistilBERT + Sentence Transformers |
+| Machine Learning | PyTorch |
+| Data Processing | Pandas, NumPy |
+| Deployment | Docker |
+
+---
+
+# 📊 Workflow
+
+```text
+Upload Document
+        │
+        ▼
+OCR Extraction
+        │
+        ▼
+Text Preprocessing
+        │
+        ▼
+Entity Recognition
+        │
+        ▼
+AI Summarization
+        │
+        ▼
+Semantic Indexing
+        │
+        ▼
+Question Answering
+        │
+        ▼
+Interactive Dashboard
+```
+
+---
+
+# 🧠 Core Components
+
+### 📸 OCR Engine
+
+Extracts text from scanned documents and images.
+
+### 🎯 Entity Extractor
+
+Recognizes:
+
+- Person Names
+- Organizations
+- Dates
+- Locations
+- Keywords
+
+### 🤖 Summarizer
+
+Uses Facebook BART model to generate high-quality summaries.
+
+### 💬 Question Answering
+
+Combines Semantic Search with DistilBERT for contextual answers.
+
+---
+
+# 🐳 Docker Deployment
+
+## Build Docker Image
+
+```bash
+docker build -t document-intelligence -f docker/Dockerfile .
+```
+
+## Run Container
+
+```bash
+docker run -d -p 8501:8501 --name document-ai document-intelligence
+```
+
+## View Logs
+
+```bash
+docker logs -f document-ai
+```
+
+---
+
+## Docker Compose
+
+```bash
+docker-compose -f docker/docker-compose.yml up -d
+```
+
+Stop services
+
+```bash
+docker-compose -f docker/docker-compose.yml down
+```
+
+View logs
+
+```bash
+docker-compose -f docker/docker-compose.yml logs -f
+```
+
+---
+
+# ⚙️ Environment Variables
+
+Create a `.env` file.
+
+```env
+STREAMLIT_SERVER_PORT=8501
+STREAMLIT_SERVER_ADDRESS=0.0.0.0
+
+TESSERACT_PATH=/usr/bin/tesseract
+
+MODEL_CACHE_DIR=/app/cache
+HF_HOME=/app/cache/huggingface
+
+LOG_LEVEL=INFO
+```
+
+
+
+<div align="center">
+
+### Made with ❤️ by **PEER SHEIK ABDULLAH MOHD NOORDEEN P M**
+
+</div>
