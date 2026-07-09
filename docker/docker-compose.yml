@@ -1,0 +1,77 @@
+version: '3.8'
+
+services:
+  document-intelligence:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: document-intelligence-app
+    ports:
+      - "8501:8501"
+    environment:
+      - STREAMLIT_SERVER_PORT=8501
+      - STREAMLIT_SERVER_ADDRESS=0.0.0.0
+      - TESSERACT_PATH=/usr/bin/tesseract
+      - PYTHONUNBUFFERED=1
+      - LOG_LEVEL=INFO
+      - HF_HOME=/app/cache/huggingface
+      - TRANSFORMERS_CACHE=/app/cache/transformers
+    volumes:
+      # For development - mount code for hot reload (optional)
+      - ../app:/app/app:ro
+      # Persistent cache for models
+      - model_cache:/app/cache
+      # Persistent data storage
+      - data_storage:/app/data
+      # Logs
+      - logs_storage:/app/logs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501/_stcore/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    networks:
+      - app-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+        reservations:
+          cpus: '0.5'
+          memory: 1G
+
+  # Optional: Redis for caching (if needed)
+  redis:
+    image: redis:7-alpine
+    container_name: document-intelligence-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - app-network
+    restart: unless-stopped
+    profiles:
+      - full
+
+volumes:
+  model_cache:
+    driver: local
+  data_storage:
+    driver: local
+  logs_storage:
+    driver: local
+  redis_data:
+    driver: local
+
+networks:
+  app-network:
+    driver: bridge
