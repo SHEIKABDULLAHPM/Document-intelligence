@@ -1,17 +1,28 @@
+# ── Core dependencies with pinned versions to avoid resolver backtracking ──
 streamlit==1.28.0
 pytesseract==0.3.10
 Pillow==10.0.0
 pdf2image==1.16.3
 pypdf2==3.0.1
 pdfplumber==0.10.3
-opencv-python>=4.8.1.78
+opencv-python-headless==4.8.1.78
+pypdfium2==4.30.0
+
+# ── NLP ──
 spacy==3.7.4
 nltk==3.8.1
-pandas>=2.1.2
+
+# ── Data / ML ──
+pandas==2.1.4
 python-dotenv==1.0.0
-scikit-learn>=1.4.0
+scikit-learn==1.4.2
+numpy==1.24.4
+
+# ── Transformers / Torch (CPU-only, avoids huge CUDA downloads) ──
+torch==2.0.1+cpu
+torchvision==0.15.2+cpu
+--extra-index-url https://download.pytorch.org/whl/cpu
+
 transformers==4.30.2
 sentence-transformers==2.2.2
 huggingface-hub==0.19.4
-torch==2.0.1
-numpy==1.24.3

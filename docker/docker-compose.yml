@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   document-intelligence:
     build:
@@ -17,8 +15,6 @@ services:
       - HF_HOME=/app/cache/huggingface
       - TRANSFORMERS_CACHE=/app/cache/transformers
     volumes:
-      # For development - mount code for hot reload (optional)
-      - ../app:/app/app:ro
       # Persistent cache for models
       - model_cache:/app/cache
       # Persistent data storage
@@ -26,12 +22,6 @@ services:
       # Logs
       - logs_storage:/app/logs
     restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8501/_stcore/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 60s
     networks:
       - app-network
     logging:
@@ -39,28 +29,6 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
-    deploy:
-      resources:
-        limits:
-          cpus: '2'
-          memory: 4G
-        reservations:
-          cpus: '0.5'
-          memory: 1G
-
-  # Optional: Redis for caching (if needed)
-  redis:
-    image: redis:7-alpine
-    container_name: document-intelligence-redis
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis_data:/data
-    networks:
-      - app-network
-    restart: unless-stopped
-    profiles:
-      - full
 
 volumes:
   model_cache:
@@ -68,8 +36,6 @@ volumes:
   data_storage:
     driver: local
   logs_storage:
-    driver: local
-  redis_data:
     driver: local
 
 networks:
